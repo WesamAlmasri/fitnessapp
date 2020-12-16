@@ -6,6 +6,7 @@ import { View,
 import styles  from './styles';
 import { formatDuration } from './helper';
 import { Feather as Icon } from '@expo/vector-icons';
+import Svg, { Path } from 'react-native-svg';
 
 
 export default Monitor = (props) => {
@@ -17,10 +18,18 @@ export default Monitor = (props) => {
         let interval = setInterval(() => setDuration(prev => prev + 1),1000);
         return () => clearInterval(interval);
     }, [])
-    
+
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.distanceText}>{distance}</Text>
+            <View>
+                 <Svg style={styles.progress}>
+                    <Path stroke="#EBEDF8" strokeWidth={20} d="M10,110 a50,50 0 1 1 200,0" />
+                    <Path stroke="#00ca9d" strokeWidth={20} d="M10,110 a50,50 0 1 1 200,0" strokeDasharray={"300"} strokeDashoffset="300" />
+                </Svg>
+                <View style={styles.progressLabel}>
+                  <Text style={styles.distanceText}>{distance}</Text>  
+                </View>
+            </View>
             <View style={styles.rows}>
                 <View style={styles.row}>
                     <Icon name="watch" color="white" size={28} />

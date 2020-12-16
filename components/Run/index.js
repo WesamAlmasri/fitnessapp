@@ -5,6 +5,7 @@ import styles  from './styles';
 import MapView, { Marker, Polygon } from 'react-native-maps';
 import * as Location from 'expo-location';
 import Monitor from '../Monitor';
+import Pin from '../Pin';
 import { distanceBetween, computePace } from './helper'
 
 
@@ -49,7 +50,9 @@ export default Run = (props) => {
                 style={styles.map}
             >
                 <Polygon coordinates={positions.map(position => position.coords)} strokeWidth={10} strokeColor="#f2b659" />
-                <Marker coordinate={currentPosition.coords} />
+                <Marker coordinate={currentPosition.coords} anchor={{ x: 0.5, y: 0.5 }}>
+                    <Pin />
+                </Marker>
             </MapView>
         </View>
     );
