@@ -13,7 +13,6 @@ export default styles = StyleSheet.create({
         width: 220,
         height: 110,
         marginVertical: 20,
-        backgroundColor: "red",
     },
     progressLabel: {
         ...StyleSheet.absoluteFillObject,
