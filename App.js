@@ -1,20 +1,58 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, 
+        View,
+        Alert,
+        ActivityIndicator,
+        StatusBar,
+      } from 'react-native';
+import * as Location from 'expo-location';
+import Run from './components/Run';
 
-export default function App() {
+
+
+export default App = () => {
+  const [ready, setReady] = useState(false);
+  const [position, setPosition] = useState(null);
+
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status === 'granted') {
+          const { coords: {latitude, longitude, altitude}, timestamp } = await Location.getCurrentPositionAsync();
+          setPosition({ coords: {latitude, longitude, altitude}, timestamp });
+          setReady(true);
+      } else {
+        Alert.alert('Access denied','Permission to access location was denied');
+      }
+  
+    })();
+  },[]);
+  
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar barStyle="light-content" />
+      {
+        ready ? 
+        (
+          <Run distance={200} startup_position={position} />
+        )
+        :
+        (
+          <View style={styles.container}>
+            <ActivityIndicator size="large" color="white" />
+          </View>
+        )
+      }
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#29252b',
     alignItems: 'center',
     justifyContent: 'center',
   },
