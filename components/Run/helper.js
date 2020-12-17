@@ -13,6 +13,6 @@ export const distanceBetween = (origin, destination) => {
 
 export const computePace = (delta, prevPosition, position) => {
     const time = (position.timestamp - prevPosition.timestamp) / 1000;
-    const pace = time /delta;
+    const pace = (time /delta);
     return pace;
 }

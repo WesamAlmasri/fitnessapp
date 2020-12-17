@@ -9,10 +9,12 @@ export default styles = StyleSheet.create({
         backgroundColor: "#29252b",
         alignItems: "center",
     },
+    progressContainer: {
+        marginTop: 10,
+    },
     progress: {
         width: 220,
-        height: 110,
-        marginVertical: 20,
+        height: 170,
     },
     progressLabel: {
         ...StyleSheet.absoluteFillObject,
@@ -20,7 +22,11 @@ export default styles = StyleSheet.create({
         alignItems: "center",
     },
     distanceText: {
-        fontSize: 72,
+        fontSize: 55,
+        color: "white",
+    },
+    unitText: {
+        fontSize: 30,
         color: "white",
     },
     rows: {

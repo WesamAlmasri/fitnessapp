@@ -19,7 +19,7 @@ export default App = () => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       if (status === 'granted') {
-          const { coords: {latitude, longitude, altitude}, timestamp } = await Location.getCurrentPositionAsync();
+          const { coords: {latitude, longitude, altitude}, timestamp } = await Location.getCurrentPositionAsync({accuracy: 6});
           setPosition({ coords: {latitude, longitude, altitude}, timestamp });
           setReady(true);
       } else {
@@ -36,7 +36,7 @@ export default App = () => {
       {
         ready ? 
         (
-          <Run distance={200} startup_position={position} />
+          <Run startup_position={position} />
         )
         :
         (
