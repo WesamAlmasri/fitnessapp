@@ -63,16 +63,16 @@ export default Run = (props) => {
 
     useEffect(() => {
         if(started){
-            let interval;
-            let listener;
-            interval = setInterval(() => setDuration(prev => prev + 1), 1000);
+            let cleaned = false;
+            let interval = setInterval(() => setDuration(prev => prev + 1), 1000);
             (async () => {
                 const options = {accuracy: 6, timeInterval: 1000, distanceInterval: 1};
-                listener = await Location.watchPositionAsync(options, onPositionChange)
+                let listener = await Location.watchPositionAsync(options, onPositionChange);
+                if(cleaned)listener.remove();
             })();
             return () => {
                 clearInterval(interval);
-                listener.remove();
+                cleaned = true;
             } 
         }
     },[started]);
