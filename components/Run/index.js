@@ -11,7 +11,7 @@ import * as Location from 'expo-location';
 import MapView, { Marker, Polygon } from 'react-native-maps';
 import Monitor from '../Monitor';
 import Pin from '../Pin';
-import { distanceBetween, computePace } from './helper'
+import { distanceBetween, computePace, storeData, getData} from './helper'
 import CircleButton from '../CircleButton';
 import LabeledTextInput from '../LabeledTextInput';
 
@@ -133,13 +133,22 @@ export default Run = (props) => {
                 Alert.alert('Alert', 'Invalid Value, Please try again');
             }
         } else if(started && !ended){
+            (async() => {
+                const old_list = await getData('trainings_list');
+                if(!old_list){
+                    await storeData('trainings_list', [statistics]);
+                } else {
+                    await storeData('trainings_list', [...old_list, statistics]);
+                    console.log('old_list ', old_list);
+                }
+            })();
             setButton({text: 'Statics', color: 'blue'});
             setStarted(false);
             SetEnded(true);
             return;
 
         } else if(!started && ended){
-            Alert.alert('Not implemented yet')
+            console.log('Statistics Page');
         }
       }
 
