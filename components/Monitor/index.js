@@ -11,28 +11,23 @@ import * as _ from 'lodash';
 
 
 export default Monitor = (props) => {
-    const { distance, pace, targetDistance, started } = props;
-
-    const [duration, setDuration] = useState(0);
-
-    useEffect(() => {
-        let interval;
-        if(started)
-            interval = setInterval(() => setDuration(prev => prev + 1),1000);
-        
-        return () => clearInterval(interval);
-    }, [started])
+    const { distance, pace, targetDistance, duration } = props;
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.progressContainer}>
                  <Svg style={styles.progress}>
                     <Path stroke="#EBEDF8" strokeWidth={20} d="M10,110 a50,50 0 1 1 200,0" />
-                    <Path stroke="#00ca9d" strokeWidth={20} d="M10,110 a50,50 0 1 1 200,0" strokeDasharray="360" strokeDashoffset="180" />
+                    <Path stroke="#00ca9d" strokeWidth={20} d="M10,110 a50,50 0 1 1 200,0" strokeDasharray={360} strokeDashoffset={360 - distance /( targetDistance * 1000)} />
                 </Svg>
                 <View style={styles.progressLabel}>
                   <Text style={styles.distanceText}>{distance < 1000 ? String(_.floor(distance, 2)) : String(_.floor(distance / 1000, 2)) }</Text>  
                   <Text style={styles.unitText}>{distance < 1000 ? 'm' : 'Km'  }</Text>
+                  <View style={styles.targetContainer}>
+                    <Text style={styles.zeroDistanceText}>      0</Text>
+                    <Text style={styles.percentageText}>     {String(distance) / targetDistance || 100}%</Text>
+                    <Text style={styles.targetDistanceText}>{String(targetDistance) + 'Km'  }</Text>
+                  </View>
                 </View>
             </View>
             <View style={styles.rows}>

@@ -14,11 +14,13 @@ import Monitor from '../Monitor';
 import Pin from '../Pin';
 import { distanceBetween, computePace } from './helper'
 import CircleButton from '../CircleButton';
+import LabeledTextInput from '../LabeledTextInput';
 
 
 export default Run = (props) => {
     const [positions, setPositions] = useState([]);
     const [distance, setDistance] = useState(0);
+    const [duration, setDuration] = useState(0);
     const [textInput, setTextInput] = useState('');
     const [button, setButton] = useState({text: 'Start', color: 'blue'});
     const [targetDistance, setTargetDistance] = useState(0);
@@ -34,12 +36,17 @@ export default Run = (props) => {
     
     useEffect(() => {
         if(started){
+            let interval;
             let listener;
+            interval = setInterval(() => setDuration(prev => prev + 1), 1000);
             (async () => {
                 const options = {accuracy: 6, timeInterval: 1000, distanceInterval: 1};
                 listener = await Location.watchPositionAsync(options, onPositionChange)
             })();
-            return () => listener.remove(); 
+            return () => {
+                clearInterval(interval);
+                listener.remove();
+            } 
         }
     },[started]);
 
@@ -102,10 +109,6 @@ export default Run = (props) => {
         }
       }
 
-      const onLongPress = () => {
-        
-      }
-
       const buttonAnimDown = () => {
             Animated.timing(
                 fadeAnim,{
@@ -117,7 +120,7 @@ export default Run = (props) => {
     
     return (
         <View style={styles.container}>
-            <Monitor {...{distance, pace, targetDistance, started}} />
+            <Monitor {...{distance, pace, targetDistance, duration}} />
             <MapView 
                 ref={map}
                 provider="google" 
@@ -135,27 +138,20 @@ export default Run = (props) => {
                                     outputRange: [Dimensions.get("window").height / 3, 20]
                                 })}]}>
                 {!started && !ended && 
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.inputLabel}>Enter the target distance for the training in Km</Text>
-                        <TextInput 
-                                style={styles.textInput}
-                                placeholder="Enter target distance in Km"
-                                textAlign="center"
-                                keyboardType="numeric"
-                                value={textInput}
-                                onChangeText={setTextInput}
-                            /> 
-                    </View>
+                    <LabeledTextInput 
+                        inputLabel="Enter the target distance for the training in Km"
+                        placeholder="Enter target distance in Km"
+                        keyboardType="numeric"
+                        value={textInput}
+                        onChangeText={setTextInput}
+                    />
                 }
-                
-                
                 <CircleButton 
                     radius={100} 
                     color={button.color} 
                     text={button.text}
                     textColor="white"
                     onPress={onPressStart}
-                    onLongPress={onLongPress}
                 />
             </Animated.View>
             

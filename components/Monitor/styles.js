@@ -29,6 +29,23 @@ export default styles = StyleSheet.create({
         fontSize: 30,
         color: "white",
     },
+    targetContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: 270,
+    },
+    zeroDistanceText: {
+        fontSize: 20,
+        color: "white",
+    },
+    percentageText: {
+        fontSize: 20,
+        color: "white",
+    },
+    targetDistanceText: {
+        fontSize: 20,
+        color: "white",
+    },
     rows: {
         flexDirection: "row",
         height: 64,
