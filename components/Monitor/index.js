@@ -25,7 +25,7 @@ export default Monitor = (props) => {
                   <Text style={styles.unitText}>{distance < 1000 ? 'm' : 'Km'  }</Text>
                   <View style={styles.targetContainer}>
                     <Text style={styles.zeroDistanceText}>      0</Text>
-                    <Text style={styles.percentageText}>     {String(distance) / targetDistance || 100}%</Text>
+                    <Text style={styles.percentageText}>    {String(distance) / targetDistance || 0}%</Text>
                     <Text style={styles.targetDistanceText}>{String(targetDistance) + 'Km'  }</Text>
                   </View>
                 </View>
