@@ -19,20 +19,24 @@ import LabeledTextInput from '../LabeledTextInput';
 export default Run = (props) => {
     const [ready, setReady] = useState(false);
     const [startupPosition, setStartupPosition] = useState({});
-    const [positions, setPositions] = useState([]);
-    const [distance, setDistance] = useState(0);
+    const [updatedPosition, setUpdatedPosition] = useState({});
     const [duration, setDuration] = useState(0);
+    const [targetDistance, setTargetDistance] = useState(0);
     const [textInput, setTextInput] = useState('');
     const [button, setButton] = useState({text: 'Start', color: 'blue'});
-    const [targetDistance, setTargetDistance] = useState(0);
     const [started, setStarted] = useState(false);
     const [ended, SetEnded] = useState(false);
-    const [pace, setPace] = useState(0);
     const map = useRef(null);
+    const [statistics, setStatistics] = useState({
+        positions: [],
+        durations: [],
+        paces: [],
+        distances: [],
+    });
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    const currentPosition = positions.length === 0 ? startupPosition : positions[positions.length - 1];
+    const currentPosition = statistics.positions.length === 0 ? updatedPosition : statistics.positions[statistics.positions.length - 1];
     
     useEffect(() => {
         (async () => {
@@ -40,6 +44,15 @@ export default Run = (props) => {
           if (status === 'granted') {
               const { coords: {latitude, longitude, altitude}, timestamp } = await Location.getCurrentPositionAsync({accuracy: 6});
               setStartupPosition({ coords: {latitude, longitude, altitude}, timestamp });
+              setStatistics(prev => {
+                return {
+                    ...prev, 
+                    positions: [...prev.positions, { coords: {latitude, longitude, altitude}, timestamp }],
+                    distances: [...prev.distances, 0],
+                    paces: [...prev.paces, 0],
+                    durations: [...prev.durations, 0],
+                };
+            });
               setReady(true);
           } else {
             Alert.alert('Access denied','Permission to access location was denied');
@@ -65,25 +78,32 @@ export default Run = (props) => {
     },[started]);
 
     useEffect(() => {
-        if(positions.length > 1)
-        calculate(positions[positions.length - 1])
-    }, [positions])
+        if(statistics.positions.length > 0)
+        calculate(updatedPosition)
+    }, [updatedPosition])
 
 
     const onPositionChange = (position) => {
         if(position.coords.accuracy < 20){
-            setPositions(prev => [...prev, position]);
+            setUpdatedPosition(position);
         }
       }
     
       const calculate = (position) => {
-        map.current.animateCamera({center: {latitude: position.coords.latitude,longitude: position.coords.longitude,}});
-        lastPosition = positions.length === 0 ? startupPosition : positions[positions.length - 2];
+        map.current.animateCamera({center: {latitude: position.coords.latitude,longitude: position.coords.longitude}});
+        const lastPosition = statistics.positions.length === 0 ? startupPosition : statistics.positions[statistics.positions.length - 1];
         const delta = distanceBetween(lastPosition, position);
-        const new_distance = distance + delta;
+        const new_distance = statistics.distances[statistics.distances.length - 1] + delta;
         const pace = delta > 0 ? computePace(delta, lastPosition, position) : 0;
-        setDistance(new_distance);
-        setPace(pace);
+        if(pace < 0.05)return;
+        setStatistics(prev => {
+            return {
+                positions: [...prev.positions, position],
+                distances: [...prev.distances, new_distance],
+                paces: [...prev.paces, pace],
+                durations: [...prev.durations, duration],
+            };
+        });
       }
 
       const onPressStart = () => {
@@ -135,19 +155,24 @@ export default Run = (props) => {
     return (
         <>
             {!ready ? (
-                <View style={styles.container}>
+                <View style={styles.ActivityIndicator}>
                     <ActivityIndicator size="large" color="white" />
                 </View>
             ) : (
                 <View style={styles.container}>
-                    <Monitor {...{distance, pace, targetDistance, duration}} />
+                    <Monitor 
+                        distance={statistics.distances[statistics.distances.length - 1]}
+                        pace={statistics.paces[statistics.paces.length - 1]} 
+                        targetDistance={targetDistance}
+                        duration={duration}
+                    />
                     <MapView 
                         ref={map}
                         provider="google" 
                         initialRegion={{ latitude: startupPosition.coords.latitude, longitude: startupPosition.coords.longitude ,latitudeDelta: 0.01, longitudeDelta: 0.01 }}
                         style={styles.map}
                     >
-                        <Polygon coordinates={positions.map(position => position.coords)} strokeWidth={10} strokeColor="#f2b659" />
+                        <Polygon coordinates={statistics.positions.map(position => position.coords)} strokeWidth={10} strokeColor="#f2b659" />
                         <Marker coordinate={currentPosition.coords} anchor={{ x: 0.5, y: 0.5 }}>
                             <Pin />
                         </Marker>
