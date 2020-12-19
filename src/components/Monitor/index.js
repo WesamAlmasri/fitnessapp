@@ -4,7 +4,7 @@ import { View,
         SafeAreaView,
     } from 'react-native';
 import styles  from './styles';
-import { formatPace, formatDuration } from './helper';
+import { formatPace, formatDuration } from '../../generalHelper';
 import { Feather as Icon } from '@expo/vector-icons';
 import Svg, { Path } from 'react-native-svg';
 import * as _ from 'lodash';

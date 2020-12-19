@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, 
         StatusBar,
       } from 'react-native';
-import Run from './components/Run';
-import StatisticsData from './components/StatisticsData';
+import Run from './src/components/Run';
+import StatisticsData from './src/components/StatisticsData';
 
 
 

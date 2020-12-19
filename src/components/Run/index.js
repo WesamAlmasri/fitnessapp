@@ -11,7 +11,8 @@ import * as Location from 'expo-location';
 import MapView, { Marker, Polygon } from 'react-native-maps';
 import Monitor from '../Monitor';
 import Pin from '../Pin';
-import { distanceBetween, computePace, storeData, getData} from './helper'
+import { distanceBetween, computePace} from './helper';
+import { storeData, getData } from '../../generalHelper';
 import CircleButton from '../CircleButton';
 import LabeledTextInput from '../LabeledTextInput';
 

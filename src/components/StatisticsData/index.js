@@ -4,13 +4,13 @@ import { View,
         SafeAreaView,
       } from 'react-native';
 import DetialRow from '../DetialRow';
-import LabeledCirlcle from '../LabeledCirlcle';
 import LabeledRec from '../LabeledRec';
 import styles from './styles';
 
+      
 
-
-export default StatisticsData = () => {
+export default StatisticsData = (props) => {
+    // const { trainingData } = props;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -21,7 +21,7 @@ export default StatisticsData = () => {
             <View style={styles.row}>
                 <LabeledRec 
                     label="Target Distacne"
-                    value="100 "
+                    value="100 Km"
                 /> 
                 <LabeledRec 
                     label="Distance Covered"
@@ -30,7 +30,7 @@ export default StatisticsData = () => {
             </View>
             <View style={styles.row}>
                 <LabeledRec 
-                    label="Time Period"
+                    label="Total Time"
                     value="53:32 min"
                 /> 
                 <LabeledRec 

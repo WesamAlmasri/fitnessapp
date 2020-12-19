@@ -1,22 +1,5 @@
-import * as turf from '@turf/turf';
-import * as _ from 'lodash';
+import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-export const distanceBetween = (origin, destination) => {
-    var from = turf.point([origin.coords.longitude, origin.coords.latitude]);
-    var to = turf.point([destination.coords.longitude, destination.coords.latitude]);
-    var options = {units: 'meters'};
-
-    return _.round(turf.distance(from, to, options));
-}
-
-
-export const computePace = (delta, prevPosition, position) => {
-    const time = (position.timestamp - prevPosition.timestamp) / 1000;
-    const pace = (time /delta);
-    return pace;
-}
 
 
 export const storeData = async (storage_Key, value) => {
@@ -39,3 +22,13 @@ export const getData = async (storage_Key) => {
       console.log('error reading value');
     }
   }
+
+
+export const formatDuration = (duration) => {
+    return moment.utc(moment.duration(duration, 's').asMilliseconds()).format('mm:ss');
+}
+
+export const formatPace = (pace_in_second_per_meter) => {
+    const pace_in_minute_per_km = pace_in_second_per_meter * (1000 / 60);
+    return moment.utc(moment.duration(pace_in_minute_per_km, 'minutes').asMilliseconds()).format('mm:ss');
+}
