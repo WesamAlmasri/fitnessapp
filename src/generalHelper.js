@@ -1,6 +1,6 @@
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+export const TRAININGLISTNAME = "TRAININGLISTNAME";
 
 export const storeData = async (storage_Key, value) => {
     try {

@@ -12,7 +12,7 @@ import MapView, { Marker, Polygon } from 'react-native-maps';
 import Monitor from '../Monitor';
 import Pin from '../Pin';
 import { distanceBetween, computePace} from './helper';
-import { storeData, getData } from '../../generalHelper';
+import { storeData, getData, TRAININGLISTNAME } from '../../generalHelper';
 import CircleButton from '../CircleButton';
 import LabeledTextInput from '../LabeledTextInput';
 
@@ -40,26 +40,31 @@ export default Run = (props) => {
     const currentPosition = statistics.positions.length === 0 ? updatedPosition : statistics.positions[statistics.positions.length - 1];
     
     useEffect(() => {
+        let cleaned = false;
         (async () => {
           let { status } = await Location.requestPermissionsAsync();
           if (status === 'granted') {
               const { coords: {latitude, longitude, altitude}, timestamp } = await Location.getCurrentPositionAsync({accuracy: 6});
-              setStartupPosition({ coords: {latitude, longitude, altitude}, timestamp });
-              setStatistics(prev => {
-                return {
-                    ...prev, 
-                    positions: [...prev.positions, { coords: {latitude, longitude, altitude}, timestamp }],
-                    distances: [...prev.distances, 0],
-                    paces: [...prev.paces, 0],
-                    durations: [...prev.durations, 0],
-                };
-            });
-              setReady(true);
+              if(!cleaned){
+                setStartupPosition({ coords: {latitude, longitude, altitude}, timestamp });
+                setStatistics(prev => {
+                        return {
+                            ...prev, 
+                            positions: [...prev.positions, { coords: {latitude, longitude, altitude}, timestamp }],
+                            distances: [...prev.distances, 0],
+                            paces: [...prev.paces, 0],
+                            durations: [...prev.durations, 0],
+                        };
+                    });
+                setReady(true); 
+              } 
+              
           } else {
             Alert.alert('Access denied','Permission to access location was denied');
           }
       
         })();
+        return () => cleaned = true;
       },[]);
 
     useEffect(() => {
@@ -135,12 +140,11 @@ export default Run = (props) => {
             }
         } else if(started && !ended){
             (async() => {
-                const old_list = await getData('trainings_list');
+                const old_list = await getData(TRAININGLISTNAME);
                 if(!old_list){
-                    await storeData('trainings_list', [statistics]);
+                    await storeData(TRAININGLISTNAME, [statistics]);
                 } else {
-                    await storeData('trainings_list', [...old_list, statistics]);
-                    console.log('old_list ', old_list);
+                    await storeData(TRAININGLISTNAME, [...old_list, statistics]);
                 }
             })();
             setButton({text: 'Statics', color: 'blue'});
@@ -149,7 +153,7 @@ export default Run = (props) => {
             return;
 
         } else if(!started && ended){
-            console.log('Statistics Page');
+            props.navigation.navigate('Statistics', { data: statistics });
         }
       }
 

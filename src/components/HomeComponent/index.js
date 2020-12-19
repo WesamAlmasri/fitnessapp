@@ -17,12 +17,12 @@ export default HomeComponent = (props) => {
                 <Text style={styles.headerText}>Run For Better Health</Text>
             </LinearGradient>
             <View style={styles.body}>
-                <TouchableOpacity onPress={() => props.navigation.navigate('Training')} style={styles.row}>
+                <TouchableOpacity onPress={() => props.navigation.navigate('New Training')} style={styles.row}>
                     <LinearGradient colors={['#0091ff', '#04538f', '#0091ff']} style={styles.row}>
                         <Text style={styles.rowText}>Start New Trainig Run</Text>
                     </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => props.navigation.navigate('Training')} style={styles.row}>
+                <TouchableOpacity onPress={() => props.navigation.navigate('Trainings List')} style={styles.row}>
                     <LinearGradient colors={['#0091ff', '#04538f', '#0091ff']} style={styles.row}>
                         <Text style={styles.rowText}>History of Trainings</Text>
                     </LinearGradient>
