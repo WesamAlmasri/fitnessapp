@@ -27,9 +27,9 @@ export default styles = StyleSheet.create({
     },
     arrow: {
         height: 25,
-        width: 200,
+        width: 300,
         position: "absolute",
-        left: 150,
+        left: 50,
         top: 5,
         borderRadius: 20,
         justifyContent: "center",
@@ -38,5 +38,12 @@ export default styles = StyleSheet.create({
         paddingLeft: 10,
         backgroundColor: "red",
     },
+    chartLabel: {
+        color: "white",
+        alignSelf:"center", 
+        padding:2, 
+        marginTop:10, 
+        backgroundColor: "#2125b8"
+    }
 });
   

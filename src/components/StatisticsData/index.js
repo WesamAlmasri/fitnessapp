@@ -38,7 +38,7 @@ export default StatisticsData = (props) => {
                 <View style={styles.row}>
                     <LabeledRec 
                         label="Target Distacne"
-                        value={data.targetDistance || 'Not specified'}
+                        value={data.targetDistance}
                     /> 
                     <LabeledRec 
                         label="Distance Covered"
@@ -80,8 +80,7 @@ export default StatisticsData = (props) => {
                                     period={item.period}
                                     time={item.time}
                                     avgPace={item.avgPace}
-                                    timePercent={item.timePercent}
-                                    pacePercent={item.pacePercent}
+                                    paces_distances={item.paces_distances}
                                 />
                             }
                             ListHeaderComponent={flatListHeader}

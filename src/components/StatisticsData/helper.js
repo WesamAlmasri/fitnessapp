@@ -36,9 +36,8 @@ export const dataPerKm = (data) => {
                 delta: `${periods[i-1].km} - ${periods[i].km}`,
                 period: toTimeDeltaString(data.positions[periods[i-1].index].timestamp, data.positions[periods[i].index].timestamp),
                 time: formatDuration((data.positions[periods[i].index].timestamp - data.positions[periods[i-1].index].timestamp)/1000),
-                avgPace: formatPace(avgPace(data.distances[periods[i].index], data.positions[periods[i].index].timestamp - data.positions[periods[i-1].index].timestamp)),
-                timePercent: (data.positions[periods[i].index].timestamp - data.positions[periods[i-1].index].timestamp)/(data.positions[data.positions.length - 1].timestamp - data.positions[0].timestamp),
-                pacePercent: avgPace(data.distances[periods[i].index], data.positions[periods[i].index].timestamp - data.positions[periods[i-1].index].timestamp)/avgPace(data.distances[data.distances.length - 1], data.positions[data.positions.length - 1].timestamp - data.positions[0].timestamp)
+                paces_distances: data.distances.slice(periods[i-1].index, periods[i].index+1).map((item) => {return{x: data.distances[data.distances.indexOf(item)]/1000, y: data.paces[data.distances.indexOf(item)]}}),
+                avgPace: avgPace(data.distances[periods[i].index] - data.distances[periods[i-1].index], data.positions[periods[i].index].timestamp - data.positions[periods[i-1].index].timestamp),
             }
         );
     }

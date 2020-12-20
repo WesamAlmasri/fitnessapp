@@ -111,6 +111,7 @@ export default Run = (props) => {
         if(pace < 0.05)return;
         setStatistics(prev => {
             return {
+                ...prev, 
                 positions: [...prev.positions, position],
                 distances: [...prev.distances, new_distance],
                 paces: [...prev.paces, pace],
