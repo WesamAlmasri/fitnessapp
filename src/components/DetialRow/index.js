@@ -5,7 +5,8 @@ import { View,
 import styles from './styles';
 
 export default DetialRow = (props) => {
-    const {delta, period, time, avgPace, totalAvgPace, totalTime} = props;
+    const {delta, period, time, avgPace, timePercent, pacePercent} = props;
+
 
     return (
         <View style={styles.container}>

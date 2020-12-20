@@ -29,6 +29,7 @@ export default Run = (props) => {
     const [ended, SetEnded] = useState(false);
     const map = useRef(null);
     const [statistics, setStatistics] = useState({
+        targetDistance: 0,
         positions: [],
         durations: [],
         paces: [],
@@ -70,6 +71,12 @@ export default Run = (props) => {
     useEffect(() => {
         if(started){
             let cleaned = false;
+            setStatistics(prev => {
+                return {
+                    ...prev, 
+                   targetDistance: targetDistance,
+                };
+            });
             let interval = setInterval(() => setDuration(prev => prev + 1), 1000);
             (async () => {
                 const options = {accuracy: 6, timeInterval: 1000, distanceInterval: 1};

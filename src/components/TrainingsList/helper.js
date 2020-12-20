@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet} from 'react-native';
 import { TouchableOpacity, Text } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import moment from 'moment';
+import { toDateString, toTimeDeltaString } from '../../generalHelper';
 
 
 
@@ -27,15 +27,6 @@ export const ListItem = ({ item, navigation }) => {
         </TouchableOpacity>
         
     );
-}
-
-const toDateString = (timestamp) => {
-    let d = new Date(   )
-    return moment(timestamp).format("dddd,  DD MM YYYY");
-}
-
-const toTimeDeltaString = (start, end) => {
-    return `${moment(start).format("hh:mm")} - ${moment(end).format("hh:mm")}`;
 }
 
 
