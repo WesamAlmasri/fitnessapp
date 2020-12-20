@@ -161,6 +161,7 @@ export default Run = (props) => {
             return;
 
         } else if(!started && ended){
+            props.navigation.pop();
             props.navigation.navigate('Statistics', { data: statistics });
         }
       }

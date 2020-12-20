@@ -19,7 +19,6 @@ export default StatisticsData = (props) => {
     const [ready, setReady] = useState(false);
     const [analyzedDataPerKm, setAnalyzedDataPerKm] = useState({});
 
-    
     useEffect(() => {
         const data_Per_Km = dataPerKm(data);
         if(data_Per_Km){
