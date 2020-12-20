@@ -5,7 +5,9 @@ import { View,
         FlatList,
         ActivityIndicator,
         Alert,
+        TouchableOpacity,
       } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { formatDuration, formatPace, toDateString, toTimeDeltaString } from '../../generalHelper';
 import DetialRow from '../DetialRow';
 import LabeledRec from '../LabeledRec';
@@ -68,7 +70,12 @@ export default StatisticsData = (props) => {
                 <SafeAreaView style={styles.container}>
                     <View style={styles.date}>
                         <Text style={styles.textDate}>{toDateString(data.positions[0].timestamp)}</Text>
-                        <Text style={styles.textTime}>{toTimeDeltaString(data.positions[0].timestamp, data.positions[data.positions.length - 1].timestamp)}</Text>
+                        <Text style={styles.textTime}>{toTimeDeltaString(data.positions[0].timestamp, data.positions[data.positions.length - 1].timestamp)}</Text> 
+                        <TouchableOpacity onPress={() => props.navigation.navigate('Map', { data: data, analyzedDataPerKm:analyzedDataPerKm })} style={styles.mapButton}>
+                            <LinearGradient colors={['#0091ff', '#04538f', '#0091ff']} style={styles.mapButton}>
+                                <Text style={styles.textMap}>Map</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.detailsContainer}>
                         <FlatList 

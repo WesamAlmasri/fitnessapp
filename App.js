@@ -9,6 +9,7 @@ import HomeComponent from './src/components/HomeComponent';
 import Run from './src/components/Run';
 import StatisticsData from './src/components/StatisticsData';
 import TrainingsList from './src/components/TrainingsList';
+import OnMap from './src/components/OnMap';
 
 
 const Stack = createStackNavigator();
@@ -33,6 +34,7 @@ export default App = () => {
           <Stack.Screen name="New Training" component={Run} />
           <Stack.Screen name="Trainings List" component={TrainingsList} />
           <Stack.Screen name="Statistics" component={StatisticsData} />
+          <Stack.Screen name="Map" component={OnMap} />
         </Stack.Navigator>
       </NavigationContainer>
       

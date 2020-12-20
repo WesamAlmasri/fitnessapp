@@ -35,6 +35,18 @@ export default styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
   },
+  mapButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 30,
+    borderRadius: 5,
+    width: 100,
+    marginTop:5,
+  },
+  textMap: {
+    color: "white",
+    fontSize: 20,
+  },
   detailsContainer: {
     flex: 1,
     width: "100%",
