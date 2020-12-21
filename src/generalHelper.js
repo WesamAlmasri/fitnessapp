@@ -39,6 +39,10 @@ export const toDateString = (timestamp) => {
   return moment(timestamp).format("dddd,  DD MM YYYY");
 }
 
+export const toDateStringWithoutSepDay = (timestamp) => {
+  return moment(timestamp).format("DD MM YYYY");
+}
+
 export const toTimeDeltaString = (start, end) => {
   return `${moment(start).format("hh:mm")} - ${moment(end).format("hh:mm")}`;
 }

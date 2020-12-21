@@ -26,11 +26,13 @@ export default styles = StyleSheet.create({
     },
     body: {
         flex: 1,
-        marginHorizontal: 25,
+        width: "100%",
+        marginHorizontal: 10,
         marginVertical: 10,
         borderTopWidth: 1,
         borderTopColor: "grey",
         alignItems: "center",
+        alignSelf: "center",
     },
   });
   

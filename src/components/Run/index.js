@@ -71,12 +71,6 @@ export default Run = (props) => {
     useEffect(() => {
         if(started){
             let cleaned = false;
-            setStatistics(prev => {
-                return {
-                    ...prev, 
-                   targetDistance: targetDistance,
-                };
-            });
             let interval = setInterval(() => setDuration(prev => prev + 1), 1000);
             (async () => {
                 const options = {accuracy: 6, timeInterval: 1000, distanceInterval: 1};
@@ -129,6 +123,7 @@ export default Run = (props) => {
                     return;
                 }
                 Keyboard.dismiss();
+                setButton({text: 'Ready', color: 'blue'});
                 buttonAnimDown();
                 let timer = 3;
                 let si = setInterval(() => {
@@ -137,6 +132,12 @@ export default Run = (props) => {
                         setStarted(true);
                         setButton({text: 'Stop', color: 'red'});
                         setTargetDistance(Num);
+                        setStatistics(prev => {
+                            return {
+                                ...prev, 
+                               targetDistance: Num,
+                            };
+                        });
                         clearInterval(si);
                         return;
                     }
@@ -205,7 +206,7 @@ export default Run = (props) => {
                                             inputRange: [0,1],
                                             outputRange: [Dimensions.get("window").height / 3, 20]
                                         })}]}>
-                        {!started && !ended && 
+                        {!started && !ended && button.text === 'Start' && 
                             <LabeledTextInput 
                                 inputLabel="Enter the target distance for the training in Km"
                                 placeholder="Enter target distance in Km"

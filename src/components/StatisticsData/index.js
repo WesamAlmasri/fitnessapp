@@ -39,7 +39,7 @@ export default StatisticsData = (props) => {
                 <View style={styles.row}>
                     <LabeledRec 
                         label="Target Distacne"
-                        value={data.targetDistance}
+                        value={`${data.targetDistance} Km`}
                     /> 
                     <LabeledRec 
                         label="Distance Covered"

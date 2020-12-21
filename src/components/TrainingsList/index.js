@@ -48,8 +48,10 @@ export default TrainingsList = (props) => {
                     <View style={styles.body}>
                         <FlatList 
                             data={data}
-                            renderItem={({item}) => <ListItem item={item} navigation={props.navigation} />}
+                            renderItem={({item}) => <ListItem  item={item} navigation={props.navigation} />}
                             keyExtractor={item => item.positions[0].timestamp.toString()}
+                            showsVerticalScrollIndicator={false}
+                            numColumns={3}
                         />
                     </View>
                 </SafeAreaView>
