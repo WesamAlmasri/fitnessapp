@@ -9,13 +9,16 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.2",
+    "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
     "@turf/turf": "^5.1.6",
     "expo": "~40.0.0",
+    "expo-clipboard": "~1.0.1",
     "expo-linear-gradient": "~8.4.0",
     "expo-location": "~10.0.0",
+    "expo-sharing": "~8.5.0",
     "expo-status-bar": "~1.0.3",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
@@ -30,7 +33,8 @@
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
     "react-native-svg": "12.1.0",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "socket.io-client": "^3.0.4"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

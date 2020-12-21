@@ -22,4 +22,19 @@ export default styles = StyleSheet.create({
         alignItems: "center",
         bottom: height / 3,
     },
+    shareBtn: {
+        position: "absolute",
+        height: 50,
+        width: 100,
+        borderRadius: 30,
+        top: 5,
+        right: 5,
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 100,
+    },
+    shareText: {
+        color: "white",
+        fontSize: 25,
+    }
   });

@@ -7,7 +7,9 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import Monitor from '../Monitor';
 import Pin from '../Pin';
 
-export default Tracking = () => {
+export default Tracking = (props) => {
+    const { code } = props.route.params;
+    console.log(code)
     const [ready, setReady] = useState(false);
     const [updatedPosition, setUpdatedPosition] = useState({});
     const [duration, setDuration] = useState(0);

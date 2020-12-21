@@ -1,11 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { View,
+        Text,
         ActivityIndicator,
         Alert,
         Animated,
         Dimensions,
         Keyboard,
+        TouchableOpacity,
     } from 'react-native';
+import Clipboard from 'expo-clipboard';
 import styles  from './styles';
 import * as Location from 'expo-location';
 import MapView, { Marker, Polygon } from 'react-native-maps';
@@ -15,10 +18,15 @@ import { distanceBetween, computePace} from './helper';
 import { storeData, getData, TRAININGLISTNAME } from '../../generalHelper';
 import CircleButton from '../CircleButton';
 import LabeledTextInput from '../LabeledTextInput';
+import { LinearGradient } from 'expo-linear-gradient';
+import {setupSocket} from '../socketService';
 
 
 export default Run = (props) => {
     const [ready, setReady] = useState(false);
+    const [sharing, setSharing] = useState(false);
+    const [socket, setSocket] = useState(null);
+    const [roomId, setRoomId] = useState(null);
     const [startupPosition, setStartupPosition] = useState({});
     const [updatedPosition, setUpdatedPosition] = useState({});
     const [duration, setDuration] = useState(0);
@@ -85,7 +93,10 @@ export default Run = (props) => {
     },[started]);
 
     useEffect(() => {
-        if(statistics.positions.length > 0)
+        if(roomId !== null && socket !== null){
+            socket.emit('sendDetails', JSON.stringify({data: statistics, roomId:roomId}));
+        }
+        if(statistics.positions.length > 0 &&  Object.keys(updatedPosition).length > 0)
         calculate(updatedPosition)
     }, [updatedPosition])
 
@@ -175,15 +186,41 @@ export default Run = (props) => {
                     useNativeDriver: false,
             }).start()
       }
+
+      const onPressShare = () => {
+        if(!roomId){
+            const sct = setupSocket(setRoomId);
+            sct.emit('createRoom', JSON.stringify({username: 'wesam'}));
+            setSocket(sct);
+        } else {
+            // setSocket(null);
+            setRoomId(null);
+        }
+
+      }
+
+      useEffect(() => {
+        if(roomId !== null){
+            Clipboard.setString(roomId);
+            Alert.alert('Sharing sucessfull', `This is the training id: ${roomId} you can past it any where to share it`);
+        }
+      }, [roomId])
+      
     
     return (
         <>
+             
             {!ready ? (
                 <View style={styles.ActivityIndicator}>
                     <ActivityIndicator size="large" color="white" />
                 </View>
             ) : (
                 <View style={styles.container}>
+                    <TouchableOpacity onPress={onPressShare} style={styles.shareBtn}>
+                        <LinearGradient colors={['#0091ff', '#04538f', '#0091ff']} style={styles.shareBtn} >
+                            <Text style={styles.shareText}>{roomId ? 'Stop' : 'Share'}</Text>
+                        </LinearGradient> 
+                    </TouchableOpacity>
                     <Monitor 
                         distance={statistics.distances[statistics.distances.length - 1]}
                         pace={statistics.paces[statistics.paces.length - 1]} 
