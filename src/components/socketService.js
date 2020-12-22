@@ -27,22 +27,26 @@ let socket;
 // export default SocketService;
 
 
-export const setupSocket = (setRoomId) => {
+export const setupSocket = (setRoomId, setData) => {
     socket = openSocket(SOCKET_URL);
     socket.on("createRoom", (data) => {
-        console.log('createRoom :', data)
+        // console.log('createRoom :', data)
         const roomId = JSON.parse(data).roomId;
         setRoomId(roomId);
     });
 
     socket.on("joinRoom", (data) => {
-        console.log('joinRoom :', data)
-        setRoomId(data.roomId);
+        // console.log('joinRoom :', data)
     });
 
     socket.on("sendDetails", (data) => {
-        console.log('sendDetails :', data)
+        // console.log('sendDetails :', data)
     });
+
+    socket.on("receiveData", (data) => {
+        // console.log('receiveData :', data)
+        setData(data);
+    })
 
     return socket;
 };

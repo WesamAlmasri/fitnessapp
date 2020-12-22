@@ -189,7 +189,7 @@ export default Run = (props) => {
 
       const onPressShare = () => {
         if(!roomId){
-            const sct = setupSocket(setRoomId);
+            const sct = setupSocket(setRoomId, () => null);
             sct.emit('createRoom', JSON.stringify({username: 'wesam'}));
             setSocket(sct);
         } else {

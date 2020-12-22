@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "fitnessapp",
-    "slug": "fitnessapp",
+    "name": "fitness app",
+    "slug": "fitness-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,13 +24,14 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF",
+        "backgroundColor": "#FFFFFF"
       },
       "package": "com.fitnessjoco.fitness",
       "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "App to record your running exercise and show all the statistics related.\nAll the exercises are saved with additional statistics and you can review them any time.\nLive sharing your exercise with friends. "
   }
 }
