@@ -16,4 +16,4 @@
 ## Important Links
 
 - [Socket server repo](https://github.com/WesamAlmasri/fitnessappsocket)
-- [App Link](exp://exp.host/@mr0virus/fitnessapp)
+- App Link: exp://exp.host/@mr0virus/fitnessapp
